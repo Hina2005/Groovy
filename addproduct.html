@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Add Product</h2>
+        <form id="productForm">
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" class="form-control" id="image" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Product Name</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" class="form-control" id="price" required>
+            </div>
+            <div class="form-group">
+                <label for="discount">Discount</label>
+                <input type="number" class="form-control" id="discount">
+            </div>
+            <div class="form-group">
+                <label for="type">Product Type</label>
+                <select class="form-control" id="type" required>
+                    <option value="vegetable">Vegetable</option>
+                    <option value="fruit">Fruit</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('productForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const imageFile = document.getElementById('image').files[0];
+            const name = document.getElementById('name').value;
+            const price = document.getElementById('price').value;
+            const discount = document.getElementById('discount').value;
+            const type = document.getElementById('type').value;
+
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                const product = {
+                    image: reader.result,
+                    name: name,
+                    price: price,
+                    discount: discount,
+                    type: type
+                };
+
+                let products = JSON.parse(localStorage.getItem('products')) || [];
+                products.push(product);
+                localStorage.setItem('products', JSON.stringify(products));
+
+                alert('Product added successfully!');
+                document.getElementById('productForm').reset();
+            };
+
+            if (imageFile) {
+                reader.readAsDataURL(imageFile);
+            } else {
+                alert('Please select an image file.');
+            }
+        });
+    </script>
+</body>
+</html>
