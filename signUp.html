@@ -1,26 +1,47 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>CarMart - Login Page</title>
+        <title>CarMart - Sign Up Page</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <style>
-            #side_img{
+            #side_img {
                 margin-top: 120px;
                 height: 620px;
             }
-            #in{
+            #in {
                 margin-top: 12.5%;
             }
-            .form-label{
+            .form-label {
                 font-size: 25px;
             }
-            button{
+            button {
                 font-size: larger;
                 height: 20%;
                 width: 50%;
                 margin-left: 25%;
             }
         </style>
+        <script>
+            function registerUser() {
+                const firstName = document.getElementById("firstName").value;
+                const lastName = document.getElementById("lastName").value;
+                const email = document.getElementById("eId").value;
+                const userId = document.getElementById("Id").value;
+                const password = document.getElementById("Pass").value;
+
+                let users = JSON.parse(localStorage.getItem('users')) || [];
+                const userExists = users.some(user => user.userId === userId);
+
+                if (userExists) {
+                    alert('User already registered!');
+                } else {
+                    users.push({ firstName, lastName, email, userId, password });
+                    localStorage.setItem('users', JSON.stringify(users));
+                    alert('Registration successful!');
+                    window.location.href = "Login.html";
+                }
+            }
+        </script>
     </head>
 
     <body>
@@ -30,14 +51,14 @@
                     <img src="Photoes/login_img.jpg" id="side_img">
                 </div>  
                 <div class="col" id="in"> 
-                    <form>
+                    <form onsubmit="event.preventDefault(); registerUser();">
                         <div class="mb-3">
                             <label for="Name" class="form-label"><b>Name</b></label>
-                        <div class="input-group">
-                            <input type="text" aria-label="First name" class="form-control">
-                            <input type="text" aria-label="Last name" class="form-control">
+                            <div class="input-group">
+                                <input type="text" aria-label="First name" class="form-control" id="firstName">
+                                <input type="text" aria-label="Last name" class="form-control" id="lastName">
+                            </div>
                         </div>
-                    </div>
                         <div class="mb-3">
                             <label for="Email" class="form-label"><b>Email</b></label>
                             <input type="email" class="form-control" id="eId">
@@ -51,11 +72,10 @@
                           <input type="password" class="form-control" id="Pass">
                         </div><br>
                         <button type="submit" class="btn btn-primary btn-lg">Create Account</button>
-                      </form>
+                    </form>
                 </div>
-
+            </div>
         </div>
-    </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</body>
+    </body>
 </html>
