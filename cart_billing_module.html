@@ -100,7 +100,7 @@
         <div class="col-4" style="margin-top: 60px;">
             <h5>Order Summary</h5>
             <h3 class="cart-total">Total: ₹0.00</h3>
-            <button class="btn btn-primary w-100">Proceed to Checkout</button>
+            <button class="btn btn-primary w-100" id="btn_process">Proceed to Checkout</button>
             </div>
         </div>
     </div>
@@ -182,6 +182,10 @@
             localStorage.setItem('cart', JSON.stringify(cart));
             displayCartItems();
         }
+
+        function nav() {
+                    alert('Product Purchase Successfully!');
+            }
     </script>
 </body>
 </html>
