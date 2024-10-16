@@ -22,14 +22,25 @@
             margin-top: 20px;
         }
     </style>
+    <script>
+        window.onload = function() {
+            const user = JSON.parse(localStorage.getItem('loggedInUser'));
+            if (user) {
+                document.getElementById('userName').innerText = `${user.firstName} ${user.lastName}`;
+                document.getElementById('userEmail').innerText = user.email;
+            } else {
+                window.location.href = "Login.html";
+            }
+        }
+    </script>
 </head>
 <body>
 
     <div class="container mt-5">
         <div class="profile-header">
             <img src="https://via.placeholder.com/150" alt="User Avatar" class="profile-avatar img-fluid">
-            <h2>John Doe</h2>
-            <p>Email: john.doe@example.com</p>
+            <h2 id="userName">John Doe</h2>
+            <p id="userEmail">john.doe@example.com</p>
             <p>Joined: January 2021</p>
             <a href="#" class="btn btn-primary btn-edit">Edit Profile</a>
         </div>
