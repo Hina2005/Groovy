@@ -576,24 +576,46 @@
             });
         });
     
-        function addToCart(product) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const existingProductIndex = cart.findIndex(item => item.name === product.name);
-            if (existingProductIndex !== -1) {
-                cart[existingProductIndex].quantity += 1;
-            } else {
-                cart.push(product);
-            }
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartBadge();
-            alert('Product added to cart!');
+    document.addEventListener('DOMContentLoaded', () => {
+        updateCartBadge();
+
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const product = {
+                    name: button.dataset.name,
+                    price: button.dataset.price,
+                    image: button.dataset.image,
+                    quantity: 1
+                };
+                addToCart(product);
+            });
+        });
+    });
+
+    function addToCart(product) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingProductIndex = cart.findIndex(item => item.name === product.name);
+
+        if (existingProductIndex !== -1) {
+            // If the product already exists, update the quantity
+            cart[existingProductIndex].quantity += product.quantity;
+        } else {
+            // If it's a new product, add it to the cart
+            cart.push(product);
         }
-    
-        function updateCartBadge() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cart_badge').textContent = totalItems;
-        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartBadge();
+        alert('Product added to cart!');
+    }
+
+    function updateCartBadge() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        document.getElementById('cart_badge').textContent = totalItems;
+    }
+
     </script>
 </body>
 </html>
